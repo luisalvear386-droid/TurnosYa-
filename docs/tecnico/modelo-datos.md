@@ -57,3 +57,4 @@
 ## Funciones (RPC, `security definer`)
 - `turnos_ocupados(desde date, hasta date)` → `cancha_id, fecha, hora_inicio` de reservas confirmadas, **sin datos personales**. La usa la grilla.
 - `cancelar_reserva(id uuid)` → valida dueño y regla de 2 horas, cambia el estado.
+- `es_admin()` → indica si el usuario actual es admin. La usan las políticas de RLS; sin `security definer`, las políticas de `profiles` entrarían en recursión.
