@@ -10,12 +10,16 @@ App móvil Android para reservar turnos en un complejo de canchas de fútbol sin
 
 ## Reglas de trabajo (obligatorias)
 1. **No asumas.** Si algo no está en `docs/`, preguntá antes de decidir.
-2. Una tarea por vez. Al terminar, resumí qué hiciste y qué falta.
-3. Antes de instalar una dependencia, decí cuál y por qué.
-4. Nunca escribas claves en el código. Se usa `.env` (ver `.env.example`).
-5. El SQL no se ejecuta desde acá: se escribe en `supabase/migrations/` y el usuario lo corre en el SQL Editor de Supabase.
-6. Textos de la app en español rioplatense (voseo): "Reservá", "Iniciá sesión".
-7. Al cerrar cada tarea, usá el skill `doc-bitacora`.
+2. **Trabajo autónomo.** Una tarea por vez, encadenando las de `docs/proceso/plan-hitos.md` en orden. Al cerrar cada una: corré `pruebas-verificar`, usá `doc-bitacora` y hacé el commit, sin pedir permiso.
+3. **Solo frená y esperá respuesta del usuario en estos casos:**
+   1. Hay que ejecutar SQL en Supabase: pasá el archivo y esperá su confirmación.
+   2. Hay que probar en el teléfono algo visible (pantalla o flujo nuevo): dale pasos cortos de prueba.
+   3. Hace falta una decisión que no está en `docs/`.
+   4. Hace falta instalar una dependencia que no figura en la documentación.
+4. Cuando frenés, el resumen tiene: qué hiciste, qué necesitás del usuario y qué sigue.
+5. Nunca escribas claves en el código. Se usa `.env` (ver `.env.example`).
+6. El SQL no se ejecuta desde acá: se escribe en `supabase/migrations/` y el usuario lo corre en el SQL Editor de Supabase.
+7. Textos de la app en español rioplatense (voseo): "Reservá", "Iniciá sesión".
 8. También se lee `AGENTS.md` para las reglas de Expo. La app es solo para Android: las reglas multiplataforma de `AGENTS.md` no aplican a iOS ni a web.
 
 ## Documentación (leé solo lo que la tarea necesite)
