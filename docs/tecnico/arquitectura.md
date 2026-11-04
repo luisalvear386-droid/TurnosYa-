@@ -41,8 +41,9 @@ supabase/migrations/     SQL numerado: 001_..., 002_...
 - Alias de imports (`tsconfig.json`): `@/` apunta a `src/` y `@/assets/` apunta a `assets/`.
 
 ## Código de la plantilla
-- `src/` todavía contiene el código de ejemplo de la plantilla de Expo, que no forma parte de esta estructura. Se conserva hasta que se apruebe quitarlo.
-- `npm run reset-project` (`scripts/reset-project.js`) mueve o borra `src/` y `scripts/` completos: no correrlo una vez que `src/` tenga código propio.
+- El código de ejemplo de la plantilla de Expo ya se quitó de `src/`. El ícono y el splash quedan hasta la tarea 4.1.
+- `src/app/index.tsx` es una pantalla provisoria que muestra el estado de la conexión con Supabase. Se reemplaza en la tarea 2.4, junto con `src/hooks/useConexion.ts` y `src/services/conexion.ts`.
+- Nunca correr `npm run reset-project` (`scripts/reset-project.js`): mueve o borra `src/` y `scripts/` completos.
 
 ## Navegación
 - Sin sesión → `(auth)`.

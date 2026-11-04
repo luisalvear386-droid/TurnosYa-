@@ -16,7 +16,7 @@ App móvil Android para reservar turnos en un complejo de canchas de fútbol sin
 5. El SQL no se ejecuta desde acá: se escribe en `supabase/migrations/` y el usuario lo corre en el SQL Editor de Supabase.
 6. Textos de la app en español rioplatense (voseo): "Reservá", "Iniciá sesión".
 7. Al cerrar cada tarea, usá el skill `doc-bitacora`.
-8. También se lee `AGENTS.md` para las reglas de Expo.
+8. También se lee `AGENTS.md` para las reglas de Expo. La app es solo para Android: las reglas multiplataforma de `AGENTS.md` no aplican a iOS ni a web.
 
 ## Documentación (leé solo lo que la tarea necesite)
 | Tema | Archivo |

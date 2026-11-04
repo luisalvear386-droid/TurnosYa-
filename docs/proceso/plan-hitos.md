@@ -4,7 +4,7 @@ Marcá `[x]` al terminar cada tarea.
 
 ## Hito 2 — 04/11: entorno, modelo de datos y primeras pantallas
 - [x] 2.0 Proyecto Expo creado y corriendo (lo hace el usuario).
-- [ ] 2.1 Estructura de carpetas, tema de colores y cliente de Supabase.
+- [x] 2.1 Estructura de carpetas, tema de colores y cliente de Supabase.
 - [ ] 2.2 Migración SQL inicial: tablas, índice, trigger, RLS y funciones.
 - [ ] 2.3 Tipos TypeScript y servicio de autenticación.
 - [ ] 2.4 Pantallas de Login y Registro con validación.

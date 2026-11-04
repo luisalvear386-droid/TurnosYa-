@@ -1,6 +1,6 @@
 ---
 name: diseno-pantalla
-description: Usar al crear o modificar una pantalla de la app (archivos en app/).
+description: Usar al crear o modificar una pantalla de la app (archivos en src/app/).
 ---
 
 1. Leé `docs/diseno/guia-visual.md` y la sección de la pantalla en `docs/producto/requisitos.md`.
