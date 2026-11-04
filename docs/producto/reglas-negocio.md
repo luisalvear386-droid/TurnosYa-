@@ -11,6 +11,7 @@
 - Nunca dos reservas `confirmada` para la misma cancha, fecha y hora. **Lo garantiza la base de datos** (índice único), no la pantalla.
 - Si la base rechaza por duplicado, la app muestra: "Ese turno se acaba de ocupar. Elegí otro."
 - Reserva manual del admin: sin jugador, con `nombre_cliente` obligatorio.
+- La base rechaza las reservas confirmadas en horarios pasados, en canchas inactivas, fuera del horario de atención (el turno tiene que terminar antes del cierre) o después de la ventana de hoy y los 6 días siguientes. Las reservas manuales respetan las mismas reglas, salvo la de la ventana.
 
 ## Estados
 `confirmada` → `cancelada_jugador` | `cancelada_admin`. No se borran reservas: se cancelan.
