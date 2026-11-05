@@ -42,7 +42,7 @@ supabase/migrations/     SQL numerado: 001_..., 002_...
 
 ## Código de la plantilla
 - El código de ejemplo de la plantilla de Expo ya se quitó de `src/`. El ícono y el splash quedan hasta la tarea 4.1.
-- `src/app/index.tsx` es una pantalla provisoria que muestra el estado de la conexión con Supabase. Se reemplaza en la tarea 2.4, junto con `src/hooks/useConexion.ts` y `src/services/conexion.ts`.
+- `src/app/index.tsx` es una pantalla provisoria para quien inició sesión: muestra nombre y rol, y permite cerrar sesión. Se reemplaza en la tarea 2.5.
 - Nunca correr `npm run reset-project` (`scripts/reset-project.js`): mueve o borra `src/` y `scripts/` completos.
 
 ## Navegación

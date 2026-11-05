@@ -7,7 +7,7 @@ Marcá `[x]` al terminar cada tarea.
 - [x] 2.1 Estructura de carpetas, tema de colores y cliente de Supabase.
 - [x] 2.2 Migración SQL inicial: tablas, índice, trigger, RLS y funciones.
 - [x] 2.3 Tipos TypeScript y servicio de autenticación.
-- [ ] 2.4 Pantallas de Login y Registro con validación.
+- [x] 2.4 Pantallas de Login y Registro con validación.
 - [ ] 2.5 Navegación por rol (tabs jugador y admin, pantallas vacías).
 - [ ] 2.6 CRUD de canchas (lista + formulario).
 

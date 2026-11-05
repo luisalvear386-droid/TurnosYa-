@@ -47,6 +47,9 @@
 - El primer admin se asigna a mano con un `UPDATE` en el SQL Editor.
 - Trigger: antes de guardar una reserva `confirmada`, `validar_reserva()` aplica las reglas de horario, cancha y ventana de `docs/producto/reglas-negocio.md`. No se ejecuta al cambiar otros campos ni bloquea cancelaciones.
 
+## Configuración de Auth (panel de Supabase)
+- "Confirm email" está **desactivado**: al registrarse, el usuario entra directo, sin confirmar el email.
+
 ## Seguridad (RLS activado en todas las tablas)
 | Tabla | Jugador | Admin |
 | --- | --- | --- |

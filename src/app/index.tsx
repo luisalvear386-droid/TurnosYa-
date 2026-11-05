@@ -1,21 +1,34 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
-import { useConexion } from '@/hooks/useConexion';
+import { Boton } from '@/components/Boton';
+import { useSesion } from '@/hooks/useSesion';
 import { colores, espaciados } from '@/theme';
 
-// Pantalla provisoria para probar el cliente de Supabase. Se reemplaza en la tarea 2.4.
+// Pantalla provisoria para probar el inicio de sesión. Se reemplaza en la tarea 2.5.
 export default function Index() {
-  const { cargando, error } = useConexion();
+  const { datos, cargando, error, recargar, cerrarSesion } = useSesion();
 
   return (
     <View style={styles.contenedor}>
-      <Text style={styles.titulo}>TurnosYa!</Text>
       {cargando ? (
-        <Text style={styles.estado}>Comprobando la conexión…</Text>
-      ) : error ? (
-        <Text style={[styles.estado, styles.error]}>{error}</Text>
+        <ActivityIndicator color={colores.primario} size="large" />
       ) : (
-        <Text style={styles.estado}>Conectado a Supabase</Text>
+        <>
+          {error ? <Text style={styles.error}>{error}</Text> : null}
+          {datos ? (
+            <>
+              <Text style={styles.titulo}>¡Hola, {datos.nombre}!</Text>
+              <Text style={styles.texto}>Tu rol: {datos.rol}</Text>
+            </>
+          ) : (
+            <Boton texto="Reintentá" alPresionar={() => void recargar()} />
+          )}
+          <Boton
+            texto="Cerrá sesión"
+            alPresionar={() => void cerrarSesion()}
+            variante="secundario"
+          />
+        </>
       )}
     </View>
   );
@@ -33,14 +46,15 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: colores.primario,
+    color: colores.texto,
   },
-  estado: {
+  texto: {
     fontSize: 16,
-    textAlign: 'center',
     color: colores.texto,
   },
   error: {
+    fontSize: 16,
+    textAlign: 'center',
     color: colores.error,
   },
 });
