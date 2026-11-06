@@ -2,6 +2,18 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+## Mapa del proyecto
+
+| Ubicación | Qué hay |
+| --- | --- |
+| `src/` | Frontend: la app en React Native (pantallas, hooks, servicios y componentes) |
+| `supabase/` | Backend: migraciones SQL de la base de datos |
+| `docs/` | Documentación: producto, técnica, diseño y proceso |
+| `assets/` | Recursos: imágenes, ícono y splash |
+| `scripts/` | Script de la plantilla de Expo (no se usa) |
+| `.claude/` | Configuración y skills de Claude Code |
+| Raíz | Archivos de configuración: `package.json`, `app.json`, `tsconfig.json`, `eslint.config.js`, `.env.example`; instrucciones para agentes: `CLAUDE.md`, `AGENTS.md` |
+
 ## Get started
 
 1. Install dependencies
