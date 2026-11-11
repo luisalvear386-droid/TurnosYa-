@@ -7,8 +7,8 @@ export default function AdminLayout() {
     <TabsPrincipales>
       <Tabs.Screen name="agenda" options={{ title: 'Agenda', tabBarIcon: iconoTab('today') }} />
       <Tabs.Screen
-        name="canchas/index"
-        options={{ title: 'Canchas', tabBarIcon: iconoTab('sports_soccer') }}
+        name="canchas"
+        options={{ title: 'Canchas', headerShown: false, tabBarIcon: iconoTab('sports_soccer') }}
       />
       <Tabs.Screen name="horarios" options={{ title: 'Horarios', tabBarIcon: iconoTab('schedule') }} />
     </TabsPrincipales>

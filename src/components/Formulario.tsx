@@ -2,7 +2,8 @@ import type { ReactNode } from 'react';
 import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { colores, espaciados, radioBorde } from '@/theme';
+import { CajaError } from '@/components/CajaError';
+import { colores, espaciados } from '@/theme';
 
 type Props = {
   titulo: string;
@@ -23,11 +24,7 @@ export function Formulario({ titulo, subtitulo, error, children }: Props) {
             <Text style={styles.titulo}>{titulo}</Text>
             <Text style={styles.subtitulo}>{subtitulo}</Text>
           </View>
-          {error ? (
-            <View accessibilityRole="alert" style={styles.cajaError}>
-              <Text style={styles.textoError}>{error}</Text>
-            </View>
-          ) : null}
+          {error ? <CajaError mensaje={error} /> : null}
           {children}
         </ScrollView>
       </KeyboardAvoidingView>
@@ -63,16 +60,5 @@ const styles = StyleSheet.create({
   subtitulo: {
     fontSize: 14,
     color: colores.textoSuave,
-  },
-  cajaError: {
-    padding: espaciados.m,
-    borderWidth: 1,
-    borderColor: colores.error,
-    borderRadius: radioBorde,
-    backgroundColor: colores.superficie,
-  },
-  textoError: {
-    fontSize: 14,
-    color: colores.error,
   },
 });

@@ -23,13 +23,14 @@ src/
     (jugador)/mis-reservas.tsx
     (admin)/_layout.tsx       tabs del admin
     (admin)/agenda.tsx
+    (admin)/canchas/_layout.tsx  pila: lista y, encima, el formulario
     (admin)/canchas/index.tsx
     (admin)/canchas/[id].tsx  "nuevo" = alta, id = edición
     (admin)/horarios.tsx
   lib/supabase.ts        cliente (guía oficial Supabase + Expo)
   services/              auth, canchas, horarios, reservas
   hooks/
-  components/            Boton, Campo, Tarjeta…
+  components/            Boton, Campo, Tarjeta, CajaError, PantallaError…
   theme/                 colores y espaciados (ver guia-visual.md)
   types/                 tipos de las tablas
   utils/                 fechas, validaciones

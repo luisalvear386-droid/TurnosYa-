@@ -6,6 +6,10 @@
 - La grilla muestra hoy y los 6 días siguientes.
 - No se reservan horarios pasados.
 
+## Canchas
+- Baja: el admin puede eliminar una cancha solo si nunca tuvo reservas (ni canceladas); lo impide la clave foránea de `reservas`. Si tiene, la app pide desactivarla.
+- Una cancha inactiva no aparece en la grilla y no acepta reservas nuevas.
+
 ## Reservas
 - Se confirman al instante si el turno está libre.
 - Nunca dos reservas `confirmada` para la misma cancha, fecha y hora. **Lo garantiza la base de datos** (índice único), no la pantalla.
