@@ -3,7 +3,7 @@ import type { PostgrestError } from '@supabase/supabase-js';
 import { supabase, supabaseConfigurado } from '@/lib/supabase';
 import { traducirErrorDeBase } from '@/services/errores';
 import type { Resultado } from '@/types/resultado';
-import type { ReservaConCancha, TurnoOcupado } from '@/types/tablas';
+import type { ReservaConCancha, ReservaDeAgenda, TurnoOcupado } from '@/types/tablas';
 
 const MENSAJES_POR_CODIGO: Record<string, string> = {
   // Índice único: ya hay una reserva confirmada en esa cancha, fecha y hora.
@@ -81,4 +81,39 @@ export async function cancelarReserva(id: string): Promise<Resultado<true>> {
     return { data: null, error: traducirError(error, 'No se pudo cancelar la reserva. Probá de nuevo.') };
   }
   return { data: true, error: null };
+}
+
+/** Reserva manual del admin: sin jugador, con el nombre del cliente. */
+export async function crearReservaManual(
+  turno: DatosTurno,
+  nombreCliente: string,
+): Promise<Resultado<true>> {
+  const { error } = await supabase
+    .from('reservas')
+    .insert({ ...turno, jugador_id: null, nombre_cliente: nombreCliente });
+
+  if (error) {
+    return { data: null, error: traducirError(error, 'No se pudo cargar la reserva. Probá de nuevo.') };
+  }
+  return { data: true, error: null };
+}
+
+/** Reservas confirmadas de un día, para el admin. reservas tiene dos claves a profiles: se elige jugador_id. */
+export async function obtenerReservasDelDia(fecha: string): Promise<Resultado<ReservaDeAgenda[]>> {
+  if (!supabaseConfigurado) {
+    return { data: null, error: 'Falta configurar Supabase' };
+  }
+
+  const { data, error } = await supabase
+    .from('reservas')
+    .select(`${COLUMNAS_CON_CANCHA}, jugador:profiles!reservas_jugador_id_fkey(nombre)`)
+    .eq('fecha', fecha)
+    .eq('estado', 'confirmada')
+    .order('hora_inicio')
+    .returns<ReservaDeAgenda[]>();
+
+  if (error) {
+    return { data: null, error: traducirError(error, 'No se pudo cargar la agenda. Probá de nuevo.') };
+  }
+  return { data, error: null };
 }

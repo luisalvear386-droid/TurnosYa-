@@ -12,6 +12,10 @@ export function validarNombreCancha(nombre: string): string | null {
   return nombre.trim() ? null : 'Ingresá el nombre de la cancha';
 }
 
+export function validarNombreCliente(nombre: string): string | null {
+  return nombre.trim() ? null : 'Ingresá el nombre del cliente';
+}
+
 /** Horas enteras; el cierre puede ser 24 (medianoche). */
 export function validarHorario(apertura: number, cierre: number): string | null {
   return cierre > apertura ? null : 'El cierre tiene que ser después de la apertura';

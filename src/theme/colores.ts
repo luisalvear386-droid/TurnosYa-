@@ -10,4 +10,5 @@ export const colores = {
   libre: '#E6F4EA',
   ocupado: '#ECEFED',
   error: '#C62828',
+  fondoModal: 'rgba(26, 31, 28, 0.5)',
 } as const;

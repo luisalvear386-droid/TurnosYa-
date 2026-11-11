@@ -16,6 +16,7 @@ Identidad: **TurnosYa!**. En el logo, la "o" es una pelota de fútbol.
 | libre | #E6F4EA | celda de turno libre |
 | ocupado | #ECEFED | celda de turno ocupado |
 | error | #C62828 | errores y cancelar |
+| fondoModal | #1A1F1C al 50 % | fondo oscuro detrás de un modal |
 
 ## Reglas
 - Espaciado en múltiplos de 8 (8, 16, 24, 32).

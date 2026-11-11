@@ -52,3 +52,8 @@ export type TurnoOcupado = Pick<Reserva, 'cancha_id' | 'fecha' | 'hora_inicio'>;
 export type ReservaConCancha = Reserva & {
   cancha: Pick<Cancha, 'nombre'> | null;
 };
+
+/** Reserva de la agenda del admin: con la cancha y el nombre del jugador (null si es manual). */
+export type ReservaDeAgenda = ReservaConCancha & {
+  jugador: Pick<Perfil, 'nombre'> | null;
+};

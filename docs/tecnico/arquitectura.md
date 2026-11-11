@@ -22,7 +22,7 @@ src/
     (jugador)/reservar.tsx
     (jugador)/mis-reservas.tsx
     (admin)/_layout.tsx       tabs del admin
-    (admin)/agenda.tsx
+    (admin)/agenda.tsx        agenda del día; la reserva manual se carga en un modal
     (admin)/canchas/_layout.tsx  pila: lista y, encima, el formulario
     (admin)/canchas/index.tsx
     (admin)/canchas/[id].tsx  "nuevo" = alta, id = edición

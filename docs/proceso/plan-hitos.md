@@ -15,7 +15,7 @@ Marcá `[x]` al terminar cada tarea.
 - [x] 3.1 Horarios de atención (admin).
 - [x] 3.2 Grilla de turnos y reserva (jugador).
 - [x] 3.3 Mis reservas y cancelación.
-- [ ] 3.4 Agenda del día y reserva manual (admin).
+- [x] 3.4 Agenda del día y reserva manual (admin).
 - [ ] 3.5 Recordatorios con notificaciones locales.
 - [ ] 3.6 Primera instalación en un dispositivo.
 
