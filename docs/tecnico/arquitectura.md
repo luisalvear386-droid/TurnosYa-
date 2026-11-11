@@ -28,7 +28,7 @@ src/
     (admin)/canchas/[id].tsx  "nuevo" = alta, id = edición
     (admin)/horarios.tsx
   lib/supabase.ts        cliente (guía oficial Supabase + Expo)
-  services/              auth, canchas, horarios, reservas
+  services/              auth, canchas, horarios, reservas; errores.ts traduce los errores de la base
   hooks/
   components/            Boton, Campo, Tarjeta, CajaError, PantallaError…
   theme/                 colores y espaciados (ver guia-visual.md)
@@ -51,5 +51,6 @@ supabase/migrations/     SQL numerado: 001_..., 002_...
 - Sin sesión → `(auth)`: Login.
 - Rol `jugador` → `(jugador)` con tabs: Reservar · Mis reservas. Abre en Reservar.
 - Rol `admin` → `(admin)` con tabs: Agenda · Canchas · Horarios. Abre en Agenda.
+- La fecha y la hora "de ahora" se calculan en la hora del complejo (UTC-3, `utils/fechas.ts`), no en la del teléfono.
 - El rol se lee de `profiles.rol` al iniciar sesión. Un cambio de rol se ve al volver a entrar.
 - "Cerrá sesión" está en el encabezado de las tabs de los dos roles.

@@ -13,7 +13,7 @@ Marcá `[x]` al terminar cada tarea.
 
 ## Hito 3 — 11/11: app funcional e integración
 - [x] 3.1 Horarios de atención (admin).
-- [ ] 3.2 Grilla de turnos y reserva (jugador).
+- [x] 3.2 Grilla de turnos y reserva (jugador).
 - [ ] 3.3 Mis reservas y cancelación.
 - [ ] 3.4 Agenda del día y reserva manual (admin).
 - [ ] 3.5 Recordatorios con notificaciones locales.

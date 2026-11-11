@@ -1,6 +1,7 @@
 import type { PostgrestError } from '@supabase/supabase-js';
 
 import { supabase, supabaseConfigurado } from '@/lib/supabase';
+import { traducirErrorDeBase } from '@/services/errores';
 import type { Resultado } from '@/types/resultado';
 import type { HorarioAtencion } from '@/types/tablas';
 
@@ -12,11 +13,7 @@ const MENSAJES_POR_CODIGO: Record<string, string> = {
 };
 
 function traducirError(error: PostgrestError, mensajeGeneral: string): string {
-  // Sin respuesta del servidor, supabase-js no informa código.
-  if (!error.code) {
-    return 'No se pudo conectar. Revisá tu conexión a internet.';
-  }
-  return MENSAJES_POR_CODIGO[error.code] ?? mensajeGeneral;
+  return traducirErrorDeBase(error, MENSAJES_POR_CODIGO, mensajeGeneral);
 }
 
 /** Horario de un día abierto. Los días sin fila están cerrados. */

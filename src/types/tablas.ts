@@ -47,3 +47,8 @@ export type Reserva = {
 
 /** Fila que devuelve la función turnos_ocupados: sin datos personales. */
 export type TurnoOcupado = Pick<Reserva, 'cancha_id' | 'fecha' | 'hora_inicio'>;
+
+/** Reserva con el nombre de su cancha. */
+export type ReservaConCancha = Reserva & {
+  cancha: Pick<Cancha, 'nombre'> | null;
+};
