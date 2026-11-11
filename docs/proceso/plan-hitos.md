@@ -8,7 +8,7 @@ Marcá `[x]` al terminar cada tarea.
 - [x] 2.2 Migración SQL inicial: tablas, índice, trigger, RLS y funciones.
 - [x] 2.3 Tipos TypeScript y servicio de autenticación.
 - [x] 2.4 Pantallas de Login y Registro con validación.
-- [ ] 2.5 Navegación por rol (tabs jugador y admin, pantallas vacías).
+- [x] 2.5 Navegación por rol (tabs jugador y admin, pantallas vacías).
 - [ ] 2.6 CRUD de canchas (lista + formulario).
 
 ## Hito 3 — 11/11: app funcional e integración

@@ -5,7 +5,7 @@ import { ProveedorSesion, useSesion } from '@/hooks/useSesion';
 import { colores } from '@/theme';
 
 function Navegacion() {
-  const { iniciando, sesionIniciada } = useSesion();
+  const { iniciando, sesionIniciada, datos } = useSesion();
 
   if (iniciando) {
     return (
@@ -17,12 +17,17 @@ function Navegacion() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Protected guard={sesionIniciada}>
-        <Stack.Screen name="index" />
-      </Stack.Protected>
+      {/* Sin guard: un guard falso redirige al grupo ("/(admin)"), que no tiene ruta raíz propia. */}
+      <Stack.Screen name="index" />
       <Stack.Protected guard={!sesionIniciada}>
         <Stack.Screen name="(auth)/login" />
         <Stack.Screen name="(auth)/registro" />
+      </Stack.Protected>
+      <Stack.Protected guard={datos?.rol === 'jugador'}>
+        <Stack.Screen name="(jugador)" />
+      </Stack.Protected>
+      <Stack.Protected guard={datos?.rol === 'admin'}>
+        <Stack.Screen name="(admin)" />
       </Stack.Protected>
     </Stack>
   );

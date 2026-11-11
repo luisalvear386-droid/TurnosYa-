@@ -21,7 +21,8 @@ type Sesion = {
   cargando: boolean;
   error: string | null;
   recargar: () => Promise<void>;
-  cerrarSesion: () => Promise<void>;
+  /** Devuelve el mensaje de error, o null si se cerró la sesión. */
+  cerrarSesion: () => Promise<string | null>;
 };
 
 const ContextoSesion = createContext<Sesion | null>(null);
@@ -73,12 +74,8 @@ export function ProveedorSesion({ children }: { children: ReactNode }) {
   }, [cargarPerfil]);
 
   const cerrarSesion = useCallback(async () => {
-    setCargando(true);
     const resultado = await cerrarSesionServicio();
-    if (resultado.error) {
-      setError(resultado.error);
-    }
-    setCargando(false);
+    return resultado.error;
   }, []);
 
   const valor = useMemo(

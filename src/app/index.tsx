@@ -1,34 +1,36 @@
+import { Redirect } from 'expo-router';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
 import { Boton } from '@/components/Boton';
+import { BotonCerrarSesion } from '@/components/BotonCerrarSesion';
 import { useSesion } from '@/hooks/useSesion';
 import { colores, espaciados } from '@/theme';
 
-// Pantalla provisoria para probar el inicio de sesión. Se reemplaza en la tarea 2.5.
+// Ruta raíz: lleva a cada uno a su pantalla según la sesión y el rol.
+// Solo se ve mientras carga el perfil, o si no se pudo cargar.
 export default function Index() {
-  const { datos, cargando, error, recargar, cerrarSesion } = useSesion();
+  const { sesionIniciada, datos, error, recargar } = useSesion();
+
+  if (!sesionIniciada) {
+    return <Redirect href="/login" />;
+  }
+  if (datos?.rol === 'jugador') {
+    return <Redirect href="/reservar" />;
+  }
+  if (datos?.rol === 'admin') {
+    return <Redirect href="/agenda" />;
+  }
 
   return (
     <View style={styles.contenedor}>
-      {cargando ? (
-        <ActivityIndicator color={colores.primario} size="large" />
-      ) : (
+      {error ? (
         <>
-          {error ? <Text style={styles.error}>{error}</Text> : null}
-          {datos ? (
-            <>
-              <Text style={styles.titulo}>¡Hola, {datos.nombre}!</Text>
-              <Text style={styles.texto}>Tu rol: {datos.rol}</Text>
-            </>
-          ) : (
-            <Boton texto="Reintentá" alPresionar={() => void recargar()} />
-          )}
-          <Boton
-            texto="Cerrá sesión"
-            alPresionar={() => void cerrarSesion()}
-            variante="secundario"
-          />
+          <Text style={styles.error}>{error}</Text>
+          <Boton texto="Reintentá" alPresionar={() => void recargar()} />
+          <BotonCerrarSesion />
         </>
+      ) : (
+        <ActivityIndicator color={colores.primario} size="large" />
       )}
     </View>
   );
@@ -42,15 +44,6 @@ const styles = StyleSheet.create({
     gap: espaciados.m,
     padding: espaciados.l,
     backgroundColor: colores.fondo,
-  },
-  titulo: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: colores.texto,
-  },
-  texto: {
-    fontSize: 16,
-    color: colores.texto,
   },
   error: {
     fontSize: 16,

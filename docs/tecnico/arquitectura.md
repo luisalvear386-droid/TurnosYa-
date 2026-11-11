@@ -15,6 +15,7 @@ Pantallas (src/app/)  →  Hooks (src/hooks)  →  Servicios (src/services)  →
 src/
   app/                   solo rutas (Expo Router)
     _layout.tsx          sesión + redirección por rol
+    index.tsx            ruta raíz: redirige según sesión y rol; carga del perfil, o error con reintento
     (auth)/login.tsx
     (auth)/registro.tsx
     (jugador)/_layout.tsx     tabs del jugador
@@ -42,11 +43,12 @@ supabase/migrations/     SQL numerado: 001_..., 002_...
 
 ## Código de la plantilla
 - El código de ejemplo de la plantilla de Expo ya se quitó de `src/`. El ícono y el splash quedan hasta la tarea 4.1.
-- `src/app/index.tsx` es una pantalla provisoria para quien inició sesión: muestra nombre y rol, y permite cerrar sesión. Se reemplaza en la tarea 2.5.
 - Nunca correr `npm run reset-project` (`scripts/reset-project.js`): mueve o borra `src/` y `scripts/` completos.
 
 ## Navegación
-- Sin sesión → `(auth)`.
-- Rol `jugador` → `(jugador)` con tabs: Reservar · Mis reservas.
-- Rol `admin` → `(admin)` con tabs: Agenda · Canchas · Horarios.
-- El rol se lee de `profiles.rol`.
+- La ruta raíz (`index.tsx`) no lleva guard y redirige a la pantalla que corresponde:
+- Sin sesión → `(auth)`: Login.
+- Rol `jugador` → `(jugador)` con tabs: Reservar · Mis reservas. Abre en Reservar.
+- Rol `admin` → `(admin)` con tabs: Agenda · Canchas · Horarios. Abre en Agenda.
+- El rol se lee de `profiles.rol` al iniciar sesión. Un cambio de rol se ve al volver a entrar.
+- "Cerrá sesión" está en el encabezado de las tabs de los dos roles.
