@@ -70,3 +70,9 @@ export function horasDeTurnos(apertura: string, cierre: string): number[] {
   }
   return horas;
 }
+
+/** Minutos que faltan para que empiece el turno (negativo si ya empezó). */
+export function minutosHastaTurno(fecha: string, hora: number, ahora: Ahora): number {
+  const dias = Math.round((fechaComoUtc(fecha).getTime() - fechaComoUtc(ahora.fecha).getTime()) / 86_400_000);
+  return dias * 24 * 60 + hora * 60 - ahora.minutos;
+}
