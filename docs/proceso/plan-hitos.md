@@ -22,5 +22,6 @@ Marcá `[x]` al terminar cada tarea.
 ## Entrega — 18/11
 - [ ] 4.1 Identidad: nombre, ícono, splash, versión.
 - [ ] 4.2 APK release.
+  - Nota: revisar si en el APK se crea bien el canal propio de recordatorios ("Recordatorios de partidos"). En Expo Go `setNotificationChannelAsync` falla con un NullPointerException y los avisos usan el canal por defecto (ver bitácora, 3.5).
 - [ ] 4.3 Pruebas en 2 dispositivos.
 - [ ] 4.4 Informe completo y presentación.

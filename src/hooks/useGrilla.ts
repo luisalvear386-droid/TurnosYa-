@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react';
 import { useSesion } from '@/hooks/useSesion';
 import { obtenerCanchas } from '@/services/canchas';
 import { obtenerHorarios } from '@/services/horarios';
+import { programarRecordatorio, type ResultadoRecordatorio } from '@/services/recordatorios';
 import { crearReserva, type DatosTurno, obtenerTurnosOcupados } from '@/services/reservas';
 import type { Cancha, HorarioAtencion } from '@/types/tablas';
 import { ahoraEnElComplejo, horaDeTexto, sumarDias } from '@/utils/fechas';
@@ -60,15 +61,26 @@ export function useGrilla() {
     }, [recargar]),
   );
 
-  /** Reserva el turno y recarga la grilla. Devuelve el mensaje de error o null. */
+  /** Reserva el turno, programa el recordatorio y recarga la grilla. */
   const reservar = useCallback(
-    async (turno: DatosTurno) => {
+    async (
+      turno: DatosTurno,
+      nombreCancha: string,
+    ): Promise<{ error: string | null; recordatorio: ResultadoRecordatorio | null }> => {
       if (!perfil) {
-        return 'No se pudieron cargar tus datos. Volvé a iniciar sesión.';
+        return { error: 'No se pudieron cargar tus datos. Volvé a iniciar sesión.', recordatorio: null };
       }
       const resultado = await crearReserva(turno, perfil.id);
+      const recordatorio = resultado.data
+        ? await programarRecordatorio({
+            reservaId: resultado.data,
+            nombreCancha,
+            fecha: turno.fecha,
+            horaInicio: turno.hora_inicio,
+          })
+        : null;
       await recargar();
-      return resultado.error;
+      return { error: resultado.error, recordatorio };
     },
     [perfil, recargar],
   );

@@ -28,7 +28,8 @@ src/
     (admin)/canchas/[id].tsx  "nuevo" = alta, id = edición
     (admin)/horarios.tsx
   lib/supabase.ts        cliente (guía oficial Supabase + Expo)
-  services/              auth, canchas, horarios, reservas; errores.ts traduce los errores de la base
+  services/              auth, canchas, horarios, reservas; errores.ts traduce los errores de la base;
+                         recordatorios.ts programa las notificaciones locales (expo-notifications, no usa Supabase)
   hooks/
   components/            Boton, Campo, Tarjeta, CajaError, PantallaError…
   theme/                 colores y espaciados (ver guia-visual.md)

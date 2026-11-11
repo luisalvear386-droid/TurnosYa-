@@ -1,8 +1,11 @@
 import { Tabs } from 'expo-router';
 
 import { iconoTab, TabsPrincipales } from '@/components/TabsPrincipales';
+import { useSincronizarRecordatorios } from '@/hooks/useSincronizarRecordatorios';
 
 export default function JugadorLayout() {
+  useSincronizarRecordatorios();
+
   return (
     <TabsPrincipales>
       <Tabs.Screen

@@ -37,14 +37,18 @@ export async function obtenerTurnosOcupados(
 /** Datos de un turno: `hora_inicio` en formato "HH:00:00". */
 export type DatosTurno = { cancha_id: string; fecha: string; hora_inicio: string };
 
-/** Reserva del jugador a su nombre. La base valida horario, cancha y ventana. */
-export async function crearReserva(turno: DatosTurno, jugadorId: string): Promise<Resultado<true>> {
-  const { error } = await supabase.from('reservas').insert({ ...turno, jugador_id: jugadorId });
+/** Reserva del jugador a su nombre. La base valida horario, cancha y ventana. Devuelve el id. */
+export async function crearReserva(turno: DatosTurno, jugadorId: string): Promise<Resultado<string>> {
+  const { data, error } = await supabase
+    .from('reservas')
+    .insert({ ...turno, jugador_id: jugadorId })
+    .select('id')
+    .single<{ id: string }>();
 
   if (error) {
     return { data: null, error: traducirError(error, 'No se pudo hacer la reserva. Probá de nuevo.') };
   }
-  return { data: true, error: null };
+  return { data: data.id, error: null };
 }
 
 const COLUMNAS_CON_CANCHA =

@@ -2,7 +2,10 @@ import { Stack } from 'expo-router';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { ProveedorSesion, useSesion } from '@/hooks/useSesion';
+import { configurarRecordatorios } from '@/services/recordatorios';
 import { colores } from '@/theme';
+
+configurarRecordatorios();
 
 function Navegacion() {
   const { iniciando, sesionIniciada, datos } = useSesion();

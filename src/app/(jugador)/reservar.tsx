@@ -6,6 +6,7 @@ import { CeldaTurno } from '@/components/CeldaTurno';
 import { PantallaError } from '@/components/PantallaError';
 import { SelectorFecha } from '@/components/SelectorFecha';
 import { claveTurno, type DatosGrilla, DIAS_DE_LA_GRILLA, useGrilla } from '@/hooks/useGrilla';
+import type { ResultadoRecordatorio } from '@/services/recordatorios';
 import { colores, espaciados, radioBorde } from '@/theme';
 import type { Cancha } from '@/types/tablas';
 import {
@@ -18,6 +19,15 @@ import {
   textoDeHora,
   turnoYaEmpezo,
 } from '@/utils/fechas';
+
+/** Lo que se agrega al aviso de la reserva según cómo quedó el recordatorio. */
+const AVISO_RECORDATORIO: Record<ResultadoRecordatorio, string> = {
+  programado: '\n\nTe vamos a avisar 1 hora antes.',
+  'falta-poco': '',
+  'sin-permiso':
+    '\n\nPara recibir el recordatorio 1 hora antes, activá las notificaciones de la app en los ajustes del teléfono.',
+  error: '\n\nNo se pudo programar el recordatorio.',
+};
 
 type PropsGrilla = {
   datos: DatosGrilla;
@@ -80,18 +90,19 @@ export default function Reservar() {
 
   async function confirmarReserva(cancha: Cancha, hora: number) {
     setReservando(true);
-    const errorReserva = await reservar({
-      cancha_id: cancha.id,
-      fecha,
-      hora_inicio: horaParaBase(hora),
-    });
+    const { error: errorReserva, recordatorio } = await reservar(
+      { cancha_id: cancha.id, fecha, hora_inicio: horaParaBase(hora) },
+      cancha.nombre,
+    );
     setReservando(false);
     if (errorReserva) {
       Alert.alert('No se pudo reservar', errorReserva);
     } else {
       Alert.alert(
         '¡Listo!',
-        `Reservaste ${cancha.nombre} el ${textoDeFecha(fecha)} a las ${textoDeHora(hora)}. La ves en Mis reservas.`,
+        `Reservaste ${cancha.nombre} el ${textoDeFecha(fecha)} a las ${textoDeHora(hora)}. La ves en Mis reservas.${
+          recordatorio ? AVISO_RECORDATORIO[recordatorio] : ''
+        }`,
       );
     }
   }

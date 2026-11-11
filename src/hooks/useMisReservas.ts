@@ -2,6 +2,7 @@ import { useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
 
 import { useSesion } from '@/hooks/useSesion';
+import { cancelarRecordatorio, sincronizarRecordatorios } from '@/services/recordatorios';
 import { cancelarReserva, obtenerMisReservas } from '@/services/reservas';
 import type { ReservaConCancha } from '@/types/tablas';
 
@@ -22,6 +23,8 @@ export function useMisReservas() {
     // Si falla una recarga, se sigue mostrando la lista anterior.
     if (resultado.data) {
       setDatos(resultado.data);
+      // Borra los recordatorios de reservas que canceló el complejo.
+      void sincronizarRecordatorios(resultado.data);
     }
     setError(resultado.error);
     setCargando(false);
@@ -37,6 +40,9 @@ export function useMisReservas() {
   const cancelar = useCallback(
     async (id: string) => {
       const resultado = await cancelarReserva(id);
+      if (!resultado.error) {
+        await cancelarRecordatorio(id);
+      }
       await recargar();
       return resultado.error;
     },

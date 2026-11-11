@@ -76,3 +76,8 @@ export function minutosHastaTurno(fecha: string, hora: number, ahora: Ahora): nu
   const dias = Math.round((fechaComoUtc(fecha).getTime() - fechaComoUtc(ahora.fecha).getTime()) / 86_400_000);
   return dias * 24 * 60 + hora * 60 - ahora.minutos;
 }
+
+/** Momento exacto en que empieza el turno, como Date (el complejo está en UTC-3). */
+export function inicioDelTurno(fecha: string, hora: number): Date {
+  return new Date(fechaComoUtc(fecha).getTime() + hora * 3_600_000 - DESFASE_ARGENTINA_MS);
+}

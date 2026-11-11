@@ -10,6 +10,7 @@ import {
 } from 'react';
 
 import { cerrarSesion as cerrarSesionServicio, escucharSesion, obtenerPerfil } from '@/services/auth';
+import { cancelarTodosLosRecordatorios } from '@/services/recordatorios';
 import type { Perfil } from '@/types/tablas';
 
 type Sesion = {
@@ -75,6 +76,9 @@ export function ProveedorSesion({ children }: { children: ReactNode }) {
 
   const cerrarSesion = useCallback(async () => {
     const resultado = await cerrarSesionServicio();
+    if (!resultado.error) {
+      await cancelarTodosLosRecordatorios();
+    }
     return resultado.error;
   }, []);
 

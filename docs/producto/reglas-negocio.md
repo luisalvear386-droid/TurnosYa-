@@ -30,6 +30,9 @@
 
 ## Recordatorio
 Notificación local 1 hora antes. Se programa al reservar y se cancela si se cancela la reserva. Si faltan menos de 1 hora, no se programa.
+- El permiso de notificaciones se pide la primera vez que el jugador reserva. Si lo niega, la reserva se hace igual y el aviso le explica cómo activarlas.
+- Si el complejo cancela la reserva, el recordatorio se borra la próxima vez que el jugador abre la app o entra a Mis reservas (el teléfono no se entera antes: no hay push).
+- Al cerrar sesión se borran los recordatorios programados en ese teléfono.
 
 ## Zona horaria
 America/Argentina/Buenos_Aires. Fechas y horas se guardan como hora local (`date` + `time`).
