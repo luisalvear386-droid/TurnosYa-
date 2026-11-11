@@ -18,10 +18,12 @@ Marcá `[x]` al terminar cada tarea.
 - [x] 3.4 Agenda del día y reserva manual (admin).
 - [ ] 3.5 Recordatorios con notificaciones locales.
 - [ ] 3.6 Primera instalación en un dispositivo.
+  - Pasos en `docs/proceso/guia-apk.md` (requiere buena conexión).
 
 ## Entrega — 18/11
 - [ ] 4.1 Identidad: nombre, ícono, splash, versión.
 - [ ] 4.2 APK release.
+  - Pasos en `docs/proceso/guia-apk.md`. `eas.json` ya tiene el perfil `preview` (APK); faltan las variables de EAS.
   - Nota: revisar si en el APK se crea bien el canal propio de recordatorios ("Recordatorios de partidos"). En Expo Go `setNotificationChannelAsync` falla con un NullPointerException y los avisos usan el canal por defecto (ver bitácora, 3.5).
 - [ ] 4.3 Pruebas en 2 dispositivos.
 - [ ] 4.4 Informe completo y presentación.
