@@ -6,6 +6,10 @@
 - La grilla muestra hoy y los 6 días siguientes.
 - No se reservan horarios pasados.
 
+## Horarios de atención
+- Un horario por día de la semana. Un día sin horario está cerrado.
+- Apertura y cierre en horas enteras. El cierre más tarde es 00:00 (en la base, `24:00`); no se cierra pasada la medianoche.
+
 ## Canchas
 - Baja: el admin puede eliminar una cancha solo si nunca tuvo reservas (ni canceladas); lo impide la clave foránea de `reservas`. Si tiene, la app pide desactivarla.
 - Una cancha inactiva no aparece en la grilla y no acepta reservas nuevas.

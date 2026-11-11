@@ -12,7 +12,7 @@ Marcá `[x]` al terminar cada tarea.
 - [x] 2.6 CRUD de canchas (lista + formulario).
 
 ## Hito 3 — 11/11: app funcional e integración
-- [ ] 3.1 Horarios de atención (admin).
+- [x] 3.1 Horarios de atención (admin).
 - [ ] 3.2 Grilla de turnos y reserva (jugador).
 - [ ] 3.3 Mis reservas y cancelación.
 - [ ] 3.4 Agenda del día y reserva manual (admin).
