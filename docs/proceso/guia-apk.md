@@ -1,8 +1,25 @@
 # Guía para generar e instalar el APK (tareas 3.6 y 4.2)
 
-Necesita buena conexión: se descargan herramientas y se compila en los servidores de Expo (EAS).
-`eas.json` ya tiene el perfil `preview` que genera un APK. Las claves de Supabase **no** van en `eas.json`:
-se cargan una sola vez como variables de entorno de EAS (paso 3).
+## Antes de empezar: qué es cada cosa
+
+Hasta ahora la app corrió dentro de **Expo Go**, una app que interpreta nuestro código. Para entregarla hace
+falta un **APK**: el archivo instalador de Android, que se instala como cualquier app y no necesita Expo Go
+ni la computadora prendida.
+
+- **EAS (Expo Application Services):** el servicio de Expo que compila el APK en sus servidores. No hace
+  falta tener Android Studio. Se usa con el comando `npx eas-cli@latest …`, que no requiere instalar nada
+  aparte (npx lo descarga solo).
+- **`eas.json`:** el archivo de configuración de EAS. Ya está en el proyecto, con un **perfil** llamado
+  `preview` que genera un APK (en lugar del formato AAB que pide Google Play).
+- **Variables de entorno de EAS:** la URL y la clave de Supabase. En la computadora están en `.env`, pero ese
+  archivo no se sube a Git ni a EAS. Por eso se cargan una sola vez en la cuenta de Expo (paso 3) y EAS las
+  pone en el APK al compilar. Las claves **no** se escriben en `eas.json`.
+- **Keystore:** la "firma" del APK. Android solo deja actualizar una app si la versión nueva tiene la misma
+  firma. EAS la crea y la guarda por vos.
+- **Cola:** en el plan gratuito, la compilación espera su turno en los servidores de Expo. Puede tardar de
+  unos minutos a más de una hora. Mientras tanto podés cerrar la terminal: el enlace queda en expo.dev.
+
+Necesita buena conexión. Todos los comandos se escriben en la terminal de VS Code, en la carpeta del proyecto.
 
 ## A. Con EAS (recomendado)
 
@@ -10,11 +27,16 @@ se cargan una sola vez como variables de entorno de EAS (paso 3).
    ```
    npx eas-cli@latest login
    ```
-2. **Vinculá el proyecto.** Agrega `extra.eas.projectId` y `owner` a `app.json`. Aceptá y commiteá ese cambio:
+   La primera vez, npx pregunta si instala `eas-cli`: respondé `y`. Después pide el email o usuario y la
+   contraseña de expo.dev. Al final dice `Logged in as <tu usuario>`.
+2. **Vinculá el proyecto** con tu cuenta de Expo (una sola vez):
    ```
    npx eas-cli@latest init
    ```
-3. **Cargá las variables de Supabase** en el entorno `preview`. Usá los mismos valores que tenés en `.env`:
+   Pregunta si crea el proyecto `@<tu usuario>/turnosya`: respondé `Y`. Agrega `extra.eas.projectId` y `owner`
+   a `app.json`. Ese cambio se commitea.
+3. **Cargá las variables de Supabase** en el entorno `preview`. Usá los mismos valores que tenés en `.env`
+   (copiá lo que está después del `=`, sin espacios):
    ```
    npx eas-cli@latest env:create --environment preview --name EXPO_PUBLIC_SUPABASE_URL --value "<URL de .env>" --visibility plaintext
    npx eas-cli@latest env:create --environment preview --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value "<clave de .env>" --visibility sensitive
@@ -25,10 +47,20 @@ se cargan una sola vez como variables de entorno de EAS (paso 3).
    ```
    npx eas-cli@latest build -p android --profile preview
    ```
-   - Si pregunta si genera un keystore (la clave que firma el APK), respondé que sí: EAS la guarda.
-   - En el plan gratuito puede haber cola. Al terminar muestra un enlace y un código QR.
-5. **Instalá en el teléfono:** abrí el enlace o el QR, descargá el APK y abrilo. Si Android lo pide, permití
-   "Instalar apps desconocidas" para el navegador. La app instalada es independiente de Expo Go.
+   - Si pregunta `Generate a new Android Keystore?`, respondé `Y`: EAS crea la firma y la guarda.
+   - Después sube el proyecto y muestra un enlace a la compilación en expo.dev. Ahí se ve la cola y el avance.
+   - Cuando termina (`Build finished`), muestra un enlace al APK y un código QR.
+5. **Instalá en el teléfono:** escaneá el QR con la cámara (o abrí el enlace en el teléfono), descargá el APK
+   y abrilo. Si Android lo pide, permití "Instalar apps desconocidas" para el navegador. Si Play Protect avisa
+   que la app es desconocida, elegí instalar de todos modos (es normal en apps que no vienen de Google Play).
+   La app instalada es independiente de Expo Go.
+
+**Si algo falla**
+- `env:create` dice que la variable ya existe: ya estaba cargada. Revisala con `env:list`.
+- La compilación falla: abrí el enlace de expo.dev, entrá al paso marcado en rojo y copiá las últimas líneas
+  del registro.
+- La app instalada muestra "Falta configurar Supabase": faltan las variables del paso 3 o tienen otro nombre.
+  Corregilas y compilá de nuevo.
 
 ## B. Plan B: compilación local con Gradle (si la cola de EAS demora)
 
@@ -69,7 +101,8 @@ Con el APK instalado en el Poco M6, revisá:
 2. Si el APK de la 3.6 se generó con la identidad final (4.1 cerrada) y sin cambios de código posteriores,
    ese mismo APK sirve. Si hubo cambios, repetí el paso 4 de A (o los pasos de B).
 3. Revisá la nota del canal de recordatorios (paso 5 de la 3.6).
-4. Avisos a horario exacto: sin el permiso `SCHEDULE_EXACT_ALARM`, Android 12 o más nuevo puede entregar el
-   recordatorio algunos minutos tarde. Si en el APK pasa, se decide si se agrega el permiso.
+4. Avisos a horario exacto: sin el permiso `SCHEDULE_EXACT_ALARM`, los avisos se programan como "bestEffort" y
+   Android 12 o más nuevo puede entregarlos algunos minutos tarde. En Expo Go llegaron a horario. Si en el APK
+   llegan tarde, se decide si se agrega el permiso (cambia `app.json` y obliga a compilar de nuevo).
 5. Instalalo en el segundo dispositivo (tarea 4.3) y registrá el build en la bitácora (fecha, perfil, enlace o
    ruta del APK, versión).
