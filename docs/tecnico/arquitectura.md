@@ -37,6 +37,8 @@ src/
   utils/                 fechas, validaciones
 assets/                  imágenes, ícono y splash
 supabase/migrations/     SQL numerado: 001_..., 002_...
+supabase/pruebas/        SQL de apoyo para pruebas (no son migraciones)
+eas.json                 perfil preview: APK; las claves van como variables de EAS
 ```
 
 ## Rutas e imports
@@ -44,8 +46,9 @@ supabase/migrations/     SQL numerado: 001_..., 002_...
 - Alias de imports (`tsconfig.json`): `@/` apunta a `src/` y `@/assets/` apunta a `assets/`.
 
 ## Código de la plantilla
-- El código de ejemplo de la plantilla de Expo ya se quitó de `src/`. El ícono y el splash quedan hasta la tarea 4.1.
+- El código de ejemplo de la plantilla de Expo ya se quitó de `src/`. El ícono y el splash propios se hicieron en la tarea 4.1.
 - Nunca correr `npm run reset-project` (`scripts/reset-project.js`): mueve o borra `src/` y `scripts/` completos.
+- `scripts/generar-identidad.py` regenera el ícono y el splash (SVG → PNG con Microsoft Edge, sin librerías de imágenes). Las instrucciones están al principio del archivo.
 
 ## Navegación
 - La ruta raíz (`index.tsx`) no lleva guard y redirige a la pantalla que corresponde:
