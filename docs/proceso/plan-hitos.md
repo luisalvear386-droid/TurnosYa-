@@ -16,7 +16,7 @@ Marcá `[x]` al terminar cada tarea.
 - [x] 3.2 Grilla de turnos y reserva (jugador).
 - [x] 3.3 Mis reservas y cancelación.
 - [x] 3.4 Agenda del día y reserva manual (admin).
-- [ ] 3.5 Recordatorios con notificaciones locales.
+- [x] 3.5 Recordatorios con notificaciones locales.
 - [ ] 3.6 Primera instalación en un dispositivo.
   - Pasos en `docs/proceso/guia-apk.md` (requiere buena conexión).
 
@@ -25,5 +25,6 @@ Marcá `[x]` al terminar cada tarea.
 - [ ] 4.2 APK release.
   - Pasos en `docs/proceso/guia-apk.md`. `eas.json` ya tiene el perfil `preview` (APK); faltan las variables de EAS.
   - Nota: revisar si en el APK se crea bien el canal propio de recordatorios ("Recordatorios de partidos"). En Expo Go `setNotificationChannelAsync` falla con un NullPointerException y los avisos usan el canal por defecto (ver bitácora, 3.5).
+  - Nota: decidir si conviene declarar el permiso `SCHEDULE_EXACT_ALARM`. Sin él, en Expo Go los avisos se programan como "bestEffort" (Android puede atrasarlos algunos minutos). En la 3.5 llegaron a horario, pero hay que confirmarlo en el APK.
 - [ ] 4.3 Pruebas en 2 dispositivos.
 - [ ] 4.4 Informe completo y presentación.
