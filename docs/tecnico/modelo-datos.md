@@ -7,6 +7,7 @@
 | --- | --- | --- |
 | id | uuid PK | = `auth.users.id` |
 | nombre | text | obligatorio |
+| dni | text | obligatorio, único, 7 u 8 dígitos; el jugador no lo puede cambiar |
 | rol | text | `jugador` (default) o `admin` |
 | created_at | timestamptz | default now() |
 
@@ -43,17 +44,19 @@
 **Índice clave:** único parcial en `reservas (cancha_id, fecha, hora_inicio) WHERE estado = 'confirmada'`.
 
 ## Automatismos
-- Trigger: al crearse un usuario en Auth, se crea su fila en `profiles` con el nombre de los metadatos y rol `jugador`.
-- El primer admin se asigna a mano con un `UPDATE` en el SQL Editor.
+- Trigger: al crearse un usuario en Auth, se crea su fila en `profiles` con el nombre y el dni de los metadatos y rol `jugador`. Rechaza el registro si el dni no tiene 7 u 8 dígitos o no coincide con la parte del correo antes del `@`.
+- El primer admin se asigna a mano con un `UPDATE` en el SQL Editor, buscándolo por `dni`.
 - Trigger: antes de guardar una reserva `confirmada`, `validar_reserva()` aplica las reglas de horario, cancha y ventana de `docs/producto/reglas-negocio.md`. No se ejecuta al cambiar otros campos ni bloquea cancelaciones.
 
 ## Configuración de Auth (panel de Supabase)
-- "Confirm email" está **desactivado**: al registrarse, el usuario entra directo, sin confirmar el email.
+- Inicio de sesión con DNI: Supabase Auth solo acepta correo o teléfono, así que la app usa un correo interno `<dni>@turnosya.invalid` (`src/services/auth.ts`). El dominio `.invalid` está reservado y nunca recibe correos. El usuario no ve ese correo en ninguna pantalla ni mensaje.
+- "Confirm email" está **desactivado**: al registrarse, el usuario entra directo. Con el correo interno no se puede confirmar nada, así que tiene que quedar desactivado.
+- Por el trigger, un usuario creado desde Authentication > Users sin `dni` en los metadatos no se puede crear: las cuentas se crean desde la app.
 
 ## Seguridad (RLS activado en todas las tablas)
 | Tabla | Jugador | Admin |
 | --- | --- | --- |
-| profiles | lee y edita el suyo (no el rol) | lee todos |
+| profiles | lee el suyo; edita solo el nombre (no el rol ni el dni) | lee todos |
 | canchas | lee | todo |
 | horarios_atencion | lee | todo |
 | reservas | lee las suyas; crea con `jugador_id = auth.uid()` | todo |

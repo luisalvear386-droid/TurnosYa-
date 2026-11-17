@@ -76,7 +76,13 @@ function AgendaDeCancha({
             {reserva ? (
               <>
                 <View style={styles.datosReserva}>
-                  <Text style={styles.nombre}>{nombreDeReserva(reserva)}</Text>
+                  <Text style={styles.nombre}>
+                    {nombreDeReserva(reserva)}
+                    {/* El DNI sirve para verificar en persona al jugador que reservó por la app. */}
+                    {reserva.jugador ? (
+                      <Text style={styles.dni}> · DNI {reserva.jugador.dni}</Text>
+                    ) : null}
+                  </Text>
                   <Text style={styles.tipo}>{reserva.jugador_id ? 'Desde la app' : 'Manual'}</Text>
                 </View>
                 <Boton
@@ -356,6 +362,9 @@ const styles = StyleSheet.create({
   nombre: {
     fontSize: 16,
     color: colores.texto,
+  },
+  dni: {
+    color: colores.textoSuave,
   },
   tipo: {
     fontSize: 14,

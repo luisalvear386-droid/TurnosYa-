@@ -1,5 +1,11 @@
 # Reglas de negocio
 
+## Cuentas
+- Cada jugador se identifica con su DNI: solo números, 7 u 8 dígitos, sin puntos.
+- Un DNI tiene una sola cuenta. Si ya está registrado, la app muestra: "Ya existe una cuenta con ese DNI. Iniciá sesión."
+- El jugador no puede cambiar su DNI.
+- El DNI de un jugador lo ven solo él y el admin (en la Agenda). Otros jugadores nunca lo ven, y la grilla (`turnos_ocupados`) no tiene datos personales.
+
 ## Turnos
 - Duran 1 hora y empiezan en hora exacta (18:00, 19:00…).
 - Solo dentro del horario de atención del día (`horarios_atencion`).

@@ -110,7 +110,7 @@ export async function obtenerReservasDelDia(fecha: string): Promise<Resultado<Re
 
   const { data, error } = await supabase
     .from('reservas')
-    .select(`${COLUMNAS_CON_CANCHA}, jugador:profiles!reservas_jugador_id_fkey(nombre)`)
+    .select(`${COLUMNAS_CON_CANCHA}, jugador:profiles!reservas_jugador_id_fkey(nombre, dni)`)
     .eq('fecha', fecha)
     .eq('estado', 'confirmada')
     .order('hora_inicio')

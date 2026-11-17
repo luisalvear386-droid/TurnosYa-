@@ -6,19 +6,31 @@ import type { Perfil } from '@/types/tablas';
 
 const FALTA_CONFIGURAR = 'Falta configurar Supabase';
 const SIN_CONEXION = 'No se pudo conectar. Revisá tu conexión a internet.';
-const EMAIL_EN_USO = 'Ya existe una cuenta con ese email.';
+const DNI_EN_USO = 'Ya existe una cuenta con ese DNI. Iniciá sesión.';
+const DEMASIADOS_INTENTOS = 'Hubo demasiados intentos. Probá de nuevo más tarde.';
+const REGISTRO_NO_DISPONIBLE = 'El registro de cuentas no está disponible.';
+
+/**
+ * Supabase Auth solo acepta correo o teléfono: cada DNI tiene un correo interno.
+ * El dominio .invalid está reservado y nunca recibe nada. El usuario no lo ve nunca:
+ * los mensajes de error se traducen por código y no se muestra el texto de Supabase.
+ */
+const DOMINIO_INTERNO = 'turnosya.invalid';
+
+function correoInterno(dni: string): string {
+  return `${dni}@${DOMINIO_INTERNO}`;
+}
 
 const MENSAJES_POR_CODIGO: Record<string, string> = {
-  invalid_credentials: 'El email o la contraseña no son correctos.',
-  email_not_confirmed: 'Confirmá tu email antes de iniciar sesión.',
-  user_already_exists: EMAIL_EN_USO,
-  email_exists: EMAIL_EN_USO,
-  email_address_invalid: 'Ingresá un email válido.',
+  invalid_credentials: 'El DNI o la contraseña no son correctos.',
+  user_already_exists: DNI_EN_USO,
+  email_exists: DNI_EN_USO,
+  email_address_invalid: 'Ingresá un DNI válido.',
   weak_password: 'La contraseña es muy débil. Probá con otra.',
-  over_email_send_rate_limit: 'Se enviaron demasiados emails. Probá de nuevo más tarde.',
-  over_request_rate_limit: 'Hubo demasiados intentos. Probá de nuevo más tarde.',
-  signup_disabled: 'El registro de cuentas no está disponible.',
-  email_provider_disabled: 'El registro de cuentas no está disponible.',
+  over_email_send_rate_limit: DEMASIADOS_INTENTOS,
+  over_request_rate_limit: DEMASIADOS_INTENTOS,
+  signup_disabled: REGISTRO_NO_DISPONIBLE,
+  email_provider_disabled: REGISTRO_NO_DISPONIBLE,
 };
 
 function traducirError(error: AuthError, mensajeGeneral: string): string {
@@ -29,12 +41,15 @@ function traducirError(error: AuthError, mensajeGeneral: string): string {
   return (error.code && MENSAJES_POR_CODIGO[error.code]) || mensajeGeneral;
 }
 
-export async function iniciarSesion(email: string, contrasena: string): Promise<Resultado<true>> {
+export async function iniciarSesion(dni: string, contrasena: string): Promise<Resultado<true>> {
   if (!supabaseConfigurado) {
     return { data: null, error: FALTA_CONFIGURAR };
   }
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password: contrasena });
+  const { error } = await supabase.auth.signInWithPassword({
+    email: correoInterno(dni),
+    password: contrasena,
+  });
 
   if (error) {
     return { data: null, error: traducirError(error, 'No se pudo iniciar sesión. Probá de nuevo.') };
@@ -43,34 +58,34 @@ export async function iniciarSesion(email: string, contrasena: string): Promise<
 }
 
 /**
- * Crea la cuenta. El trigger de la base crea el perfil con el nombre de los metadatos.
- * `sesionIniciada` es false si Supabase pide confirmar el email antes de entrar.
+ * Crea la cuenta y entra (la confirmación de email está desactivada en Supabase).
+ * El trigger de la base crea el perfil con el nombre y el dni de los metadatos.
  */
-export async function registrarse(
-  nombre: string,
-  email: string,
-  contrasena: string,
-): Promise<Resultado<{ sesionIniciada: boolean }>> {
+export async function registrarse(nombre: string, dni: string, contrasena: string): Promise<Resultado<true>> {
   if (!supabaseConfigurado) {
     return { data: null, error: FALTA_CONFIGURAR };
   }
 
   const { data, error } = await supabase.auth.signUp({
-    email,
+    email: correoInterno(dni),
     password: contrasena,
-    options: { data: { nombre } },
+    options: { data: { nombre, dni } },
   });
 
   if (error) {
     return { data: null, error: traducirError(error, 'No se pudo crear la cuenta. Probá de nuevo.') };
   }
 
-  // Con la confirmación de email activa, un email repetido no da error: vuelve sin identidades.
+  // Si alguien activara la confirmación de email, un DNI repetido no daría error: vuelve sin identidades.
   if (data.user?.identities?.length === 0) {
-    return { data: null, error: EMAIL_EN_USO };
+    return { data: null, error: DNI_EN_USO };
   }
 
-  return { data: { sesionIniciada: data.session !== null }, error: null };
+  if (!data.session) {
+    return { data: null, error: 'Tu cuenta se creó, pero no pudimos entrar. Iniciá sesión con tu DNI.' };
+  }
+
+  return { data: true, error: null };
 }
 
 export async function cerrarSesion(): Promise<Resultado<true>> {
@@ -85,7 +100,7 @@ export async function cerrarSesion(): Promise<Resultado<true>> {
 export async function obtenerPerfil(id: string): Promise<Resultado<Perfil>> {
   const { data, error } = await supabase
     .from('profiles')
-    .select('id, nombre, rol, created_at')
+    .select('id, nombre, dni, rol, created_at')
     .eq('id', id)
     .single<Perfil>();
 

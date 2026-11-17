@@ -5,41 +5,41 @@ import { Boton } from '@/components/Boton';
 import { Campo } from '@/components/Campo';
 import { Formulario } from '@/components/Formulario';
 import { useAutenticacion } from '@/hooks/useAutenticacion';
-import { validarContrasena, validarEmail } from '@/utils/validaciones';
+import { validarContrasena, validarDni } from '@/utils/validaciones';
 
 type Errores = {
-  email?: string | null;
+  dni?: string | null;
   contrasena?: string | null;
 };
 
 export default function Login() {
   const { enviando, error, iniciarSesion } = useAutenticacion();
-  const [email, setEmail] = useState('');
+  const [dni, setDni] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [errores, setErrores] = useState<Errores>({});
 
   function enviar() {
     const nuevosErrores = {
-      email: validarEmail(email),
+      dni: validarDni(dni),
       contrasena: validarContrasena(contrasena),
     };
     setErrores(nuevosErrores);
-    if (!nuevosErrores.email && !nuevosErrores.contrasena) {
-      void iniciarSesion(email, contrasena);
+    if (!nuevosErrores.dni && !nuevosErrores.contrasena) {
+      void iniciarSesion(dni, contrasena);
     }
   }
 
   return (
     <Formulario titulo="Iniciá sesión" subtitulo="Entrá para reservar tu turno." error={error}>
       <Campo
-        etiqueta="Email"
-        value={email}
-        onChangeText={setEmail}
-        error={errores.email}
-        autoCapitalize="none"
-        autoComplete="email"
-        autoCorrect={false}
-        keyboardType="email-address"
+        etiqueta="DNI"
+        value={dni}
+        onChangeText={setDni}
+        error={errores.dni}
+        placeholder="Sin puntos"
+        autoComplete="off"
+        keyboardType="number-pad"
+        maxLength={8}
       />
       <Campo
         etiqueta="Contraseña"

@@ -5,6 +5,8 @@ export type Rol = 'jugador' | 'admin';
 export type Perfil = {
   id: string;
   nombre: string;
+  /** 7 u 8 números. Solo lo ven el propio jugador y el admin. */
+  dni: string;
   rol: Rol;
   created_at: string;
 };
@@ -53,7 +55,7 @@ export type ReservaConCancha = Reserva & {
   cancha: Pick<Cancha, 'nombre'> | null;
 };
 
-/** Reserva de la agenda del admin: con la cancha y el nombre del jugador (null si es manual). */
+/** Reserva de la agenda del admin: con la cancha y el nombre y DNI del jugador (null si es manual). */
 export type ReservaDeAgenda = ReservaConCancha & {
-  jugador: Pick<Perfil, 'nombre'> | null;
+  jugador: Pick<Perfil, 'nombre' | 'dni'> | null;
 };

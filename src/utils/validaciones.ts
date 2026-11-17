@@ -4,8 +4,9 @@ export function validarNombre(nombre: string): string | null {
   return nombre.trim() ? null : 'Ingresá tu nombre';
 }
 
-export function validarEmail(email: string): string | null {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) ? null : 'Ingresá un email válido';
+/** Solo números, 7 u 8 dígitos (igual que el check de la base). */
+export function validarDni(dni: string): string | null {
+  return /^[0-9]{7,8}$/.test(dni.trim()) ? null : 'Ingresá tu DNI: 7 u 8 números, sin puntos';
 }
 
 export function validarNombreCancha(nombre: string): string | null {
