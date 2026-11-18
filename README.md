@@ -11,8 +11,7 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 | `docs/` | Documentación: producto, técnica, diseño y proceso |
 | `assets/` | Recursos: imágenes, ícono y splash |
 | `scripts/` | Script de la plantilla de Expo (no se usa) |
-| `.claude/` | Configuración y skills de Claude Code |
-| Raíz | Archivos de configuración: `package.json`, `app.json`, `tsconfig.json`, `eslint.config.js`, `.env.example`; instrucciones para agentes: `CLAUDE.md`, `AGENTS.md` |
+| Raíz | Archivos de configuración: `package.json`, `app.json`, `tsconfig.json`, `eslint.config.js`, `.env.example` |
 
 ## Get started
 
