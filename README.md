@@ -1,67 +1,76 @@
-# Welcome to your Expo app 👋
+# TurnosYa!
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicación para consultar y reservar turnos en canchas sintéticas. Incluye acceso para jugadores y herramientas de administración del complejo.
 
-## Mapa del proyecto
+## Funcionalidades
 
-| Ubicación | Qué hay |
-| --- | --- |
-| `src/` | Frontend: la app en React Native (pantallas, hooks, servicios y componentes) |
-| `supabase/` | Backend: migraciones SQL de la base de datos |
-| `docs/` | Documentación: producto, técnica, diseño y proceso |
-| `assets/` | Recursos: imágenes, ícono y splash |
-| `scripts/` | Script de la plantilla de Expo (no se usa) |
-| Raíz | Archivos de configuración: `package.json`, `app.json`, `tsconfig.json`, `eslint.config.js`, `.env.example` |
+- Registro e inicio de sesión de jugadores.
+- Consulta de canchas, horarios y turnos disponibles.
+- Reserva y consulta de turnos propios.
+- Recordatorios locales antes de un turno confirmado.
+- Panel de administración para gestionar canchas, horarios y reservas, incluidas reservas manuales.
 
-## Get started
+## Tecnologías
 
-1. Install dependencies
+- React Native y Expo
+- TypeScript y Expo Router
+- Supabase para autenticación y base de datos
+
+## Requisitos
+
+- Node.js y npm
+- Un proyecto de Supabase con acceso a su URL y clave pública (anon/publishable)
+- Expo Go o un emulador para ejecutar la aplicación
+
+## Configuración
+
+1. Clona el repositorio e instala las dependencias:
 
    ```bash
-   npm install
+   git clone https://github.com/luisalvear386-droid/TurnosYa-.git
+   cd TurnosYa-
+   npm ci
    ```
 
-2. Start the app
+2. Crea el archivo local de variables de entorno a partir del ejemplo:
 
    ```bash
-   npx expo start
+   cp .env.example .env
    ```
 
-In the output, you'll find options to open the app in a
+   En Windows PowerShell también puedes usar `Copy-Item .env.example .env`.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+3. Edita `.env` y completa los valores de tu proyecto Supabase:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+   ```env
+   EXPO_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
+   EXPO_PUBLIC_SUPABASE_ANON_KEY=tu-clave-publica
+   ```
 
-## Get a fresh project
+   No incluyas claves `service_role` ni publiques el archivo `.env`.
 
-When you're ready, run:
+4. Configura la base de datos ejecutando las migraciones SQL de `supabase/migrations/` en orden. La migración `004a` solo muestra cuentas antiguas y reservas afectadas. **Revisa ese resultado antes de ejecutar `004b`**, ya que elimina reservas asociadas a cuentas sin DNI. Ejecuta `005` después de completar la migración de esas cuentas.
+
+## Ejecutar la aplicación
 
 ```bash
-npm run reset-project
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Desde la terminal de Expo puedes abrir la app en Android, iOS o web. También están disponibles:
 
-### Other setup steps
+```bash
+npm run android
+npm run ios
+npm run web
+npm run lint
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Archivos del proyecto
 
-## Learn more
+- `src/`: pantallas, componentes, hooks y servicios de la aplicación.
+- `supabase/migrations/`: esquema y cambios de la base de datos.
+- `assets/`: íconos, imágenes y recursos visuales.
+- `Informe e Apk/`: APK de Android e informe del proyecto.
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Puedes encontrar el [APK y el informe en GitHub](https://github.com/luisalvear386-droid/TurnosYa-/tree/master/Informe%20e%20Apk).
